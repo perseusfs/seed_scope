@@ -1,0 +1,8 @@
+pyqt5
+pandas
+numpy
+matplotlib
+seaborn
+openpyxl
+pygam
+pillow
