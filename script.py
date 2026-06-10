@@ -12,6 +12,11 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtGui import QIcon
 
+def resource_path(rel):
+    """PyInstaller ile paketlenen veri dosyalarinin dogru yolunu dondurur."""
+    base = getattr(sys, "_MEIPASS", os.path.abspath("."))
+    return os.path.join(base, rel)
+
 def run(output, gf_list, treat, factor, k_value):
     df = None
     graph_text = None
@@ -26,32 +31,32 @@ def run(output, gf_list, treat, factor, k_value):
         treat_name = "(Cold)"
 
     if output == "GermP_Ort":
-        df = pd.read_excel("germination_data.xlsx")
+        df = pd.read_excel(resource_path("germination_data.xlsx"))
         graph_text = "Germination"
         output_unit = "%"
     elif output == "DormP_Ort":
-        df = pd.read_excel("germination_data.xlsx")
+        df = pd.read_excel(resource_path("germination_data.xlsx"))
         graph_text = "Dormancy"
         output_unit = "%"
     elif output == "GermP_Ort_diff":
-        df = pd.read_excel("germination_data_treat_diff.xlsx")
+        df = pd.read_excel(resource_path("germination_data_treat_diff.xlsx"))
         graph_text = "Difference"
         output_unit = "cold - control"
     elif output == "Viability":
-        df = pd.read_excel("germination_data.xlsx")
+        df = pd.read_excel(resource_path("germination_data.xlsx"))
         graph_text = "Viability"
         output_unit = "%"
     elif output == "Mass_Ort":
-        df = pd.read_excel("mass_data.xlsx")
+        df = pd.read_excel(resource_path("mass_data.xlsx"))
         graph_text = "Mass"
         treat_name = ""
         output_unit = "g"
     elif output == "Length_Ort":
-        df = pd.read_excel("length_data.xlsx")
+        df = pd.read_excel(resource_path("length_data.xlsx"))
         graph_text = "Length"
         output_unit = "mm"
     elif output == "Shape_Ort":
-        df = pd.read_excel("length_data.xlsx")
+        df = pd.read_excel(resource_path("length_data.xlsx"))
         graph_text = "Shape"
         output_unit = ""
 
@@ -160,7 +165,7 @@ class MiniGUI(QWidget):
         super().__init__()
 
         self.setWindowTitle("SeedScope v2.0 💚")
-        self.setWindowIcon(QIcon("sprout.png"))
+        self.setWindowIcon(QIcon(resource_path("sprout.png")))
         self.setFixedSize(400, 400)
 
         layout = QVBoxLayout()
@@ -224,8 +229,8 @@ class MiniGUI(QWidget):
         # PANEL
         self.notification_panel = QTextEdit()
         self.notification_panel.setReadOnly(True)
-        self.notification_panel.setFixedHeight(80)  # panel boyutu
-        # layout.addWidget(self.notification_panel)
+        self.notification_panel.setFixedHeight(50)  # panel boyutu
+        layout.addWidget(self.notification_panel)
 
         self.setLayout(layout)
 
