@@ -38,5 +38,5 @@ exe = EXE(
     upx=False,            # PyQt5 ile UPX bazen exe'yi bozar; kapali daha guvenli
     runtime_tmpdir=None,
     console=False,
-    icon='sprout.ico',    # Windows ikon icin .ico gerekir (png'yi cevir)
+    icon='sprout.png',    # Windows ikon icin .ico gerekir (png'yi cevir)
 )
