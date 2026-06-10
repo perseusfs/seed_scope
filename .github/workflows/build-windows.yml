@@ -1,0 +1,30 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:      # Actions sekmesinden elle tetikle
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest      # <-- gerçek Windows makinesi (GitHub sağlıyor)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'   # pygam ile en uyumlu sürüm
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyqt5 pandas numpy matplotlib seaborn openpyxl pygam pillow pyinstaller
+
+      - name: Build EXE
+        run: pyinstaller --clean SeedScope.spec
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: SeedScope-windows
+          path: dist/
